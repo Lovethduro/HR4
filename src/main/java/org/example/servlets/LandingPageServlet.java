@@ -11,6 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LandingPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Forward the request to the landing page HTML
-        request.getRequestDispatcher("index.html").forward(request, response);
+        request.getRequestDispatcher("/pages/index.jsp").forward(request, response);
     }
 }

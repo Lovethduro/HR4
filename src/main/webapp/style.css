@@ -399,3 +399,24 @@ header .menu.active{
     font-weight: 300 !important;
     letter-spacing: 1px !important;
 }
+.cta-section,
+.login-signup {
+    text-align: center !important;
+    margin: 50px 0 !important;
+    padding: 20px !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: #fff !important;
+    border-radius: 10px !important;
+}
+
+.cta-section h2,
+.login-signup h2 {
+    font-size: 2rem !important;
+}
+
+.login-signup button {
+    margin: 10px 0 !important;
+    padding: 10px !important;
+    width: 80% !important;
+    max-width: 400px !important;
+}
