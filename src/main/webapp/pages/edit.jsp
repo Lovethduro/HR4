@@ -44,39 +44,136 @@
     }
 %>
 
-<h2>Edit Employee</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Employee</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
 
-<form method="post" action="UpdateEmployeeServlet">
-    <!-- Hidden field for employee ID -->
-    <input type="hidden" name="empId" value="<%= employee.getEmpId() %>">
+        h2 {
+            color: #4a2c2a;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    <label for="firstName">First Name:</label>
-    <input type="text" name="firstName" value="<%= employee.getFirstName() %>" required><br><br>
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
 
-    <label for="lastName">Last Name:</label>
-    <input type="text" name="lastName" value="<%= employee.getLastName() %>" required><br><br>
+        .form-group {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-    <label for="address">Address:</label>
-    <input type="text" name="address" value="<%= employee.getAddress() %>" required><br><br>
+        label {
+            font-weight: bold;
+            color: #4a2c2a;
+        }
 
-    <label for="createdBy">Created By:</label>
-    <input type="text" name="createdBy" value="<%= employee.getCreatedBy() %>" required><br><br>
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            color: #4a2c2a;
+        }
 
-    <label for="department">Department:</label>
-    <input type="text" name="department" value="<%= employee.getDepartment() %>" required><br><br>
+        input[type="submit"] {
+            background-color: #8b5a2b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0;
+        }
 
-    <label for="position">Position:</label>
-    <input type="text" name="position" value="<%= employee.getPosition() %>" required><br><br>
+        input[type="submit"]:hover {
+            background-color: #6b4423;
+        }
 
-    <label for="role">Role:</label>
-    <input type="text" name="role" value="<%= employee.getRole() %>" required><br><br>
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #8b5a2b;
+            text-decoration: none;
+        }
 
-    <label for="qualification">Qualification:</label>
-    <input type="text" name="qualification" value="<%= employee.getQualification() %>" required><br><br>
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Employee</h2>
 
-    <input type="submit" value="Update Employee">
-</form>
+    <form method="post" action="UpdateEmployeeServlet">
+        <!-- Hidden field for employee ID -->
+        <input type="hidden" name="empId" value="<%= employee.getEmpId() %>">
 
-<%-- Include a link to go back to the employee list page --%>
-<a href="<%= request.getContextPath() %>/displayEmployee">Back to Employee List</a>
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" name="firstName" value="<%= employee.getFirstName() %>" required>
+        </div>
 
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" name="lastName" value="<%= employee.getLastName() %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" name="address" value="<%= employee.getAddress() %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="createdBy">Created By:</label>
+            <input type="text" name="createdBy" value="<%= employee.getCreatedBy() %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="department">Department:</label>
+            <input type="text" name="department" value="<%= employee.getDepartment() %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="position">Position:</label>
+            <input type="text" name="position" value="<%= employee.getPosition() %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <input type="text" name="role" value="<%= employee.getRole() %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="qualification">Qualification:</label>
+            <input type="text" name="qualification" value="<%= employee.getQualification() %>" required>
+        </div>
+
+        <input type="submit" value="Update Employee">
+    </form>
+
+    <!-- Link to go back to the employee list page -->
+    <a href="displayEmployee">Back to Employee List</a>
+</body>
+</html>

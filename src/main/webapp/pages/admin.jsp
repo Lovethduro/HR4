@@ -189,7 +189,7 @@
         <!-- Add more content here if needed -->
     </div>
     <div id="employees-section" class="content-section hidden">
-                <h1>Users Section</h1>
+                <h1>employees Section</h1>
                 <form method="post" action="${pageContext.request.contextPath}/searchEmployees">
                                <input type="text" name="searchQuery" placeholder="Search Employees..." required>
                                <button type="submit">Search</button>
@@ -197,8 +197,8 @@
 
             </div>
             <div id="user-section" class="content-section hidden">
-                <h1>Settings Section</h1>
-                <p>Adjust application settings here.</p>
+              <button onclick="window.location.href='${pageContext.request.contextPath}/createUser'" class="menu-items">Add Employee</button>
+               <h2>user section</h2>
             </div>
             <div id="reports-section" class="content-section hidden">
                 <h1>Reports Section</h1>

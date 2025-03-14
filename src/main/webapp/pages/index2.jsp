@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,7 +75,7 @@
         </div>
 
         <div class="register-link">
-            <p>Don't have an account? <a href="index3.jsp">Register</a></p>
+            <p>Don't have an account? <a href="Register">Register</a></p>
         </div>
     </form>
 </div>

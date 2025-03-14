@@ -36,12 +36,12 @@ public class AdminServlet extends HttpServlet {
             }
 
             // Check if the session exists and the user is an admin
-            if (session != null && session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("hrm")) {
+            if (session != null && session.getAttribute("userRole") != null && session.getAttribute("userRole").equals("admin")) {
                 // Retrieve the admin's username from the session
                 String username = (String) session.getAttribute("user");
 
                 // Debugging: Log the username
-                logger.info("Fetching hrm details for user: " + username);
+                logger.info("Fetching admin details for user: " + username);
 
                 // Fetch the admin's details from the database
                 String url = "jdbc:postgresql://localhost:5432/users";
@@ -75,7 +75,7 @@ public class AdminServlet extends HttpServlet {
 
 
                 // Forward to the JSP page
-                request.getRequestDispatcher("/pages/hrm.jsp").forward(request, response);
+                request.getRequestDispatcher("/pages/admin.jsp").forward(request, response);
             } else {
                 // Debugging: Log redirection to landing page
                 logger.info("Redirecting to landing page. User is not admin or session is invalid.");
