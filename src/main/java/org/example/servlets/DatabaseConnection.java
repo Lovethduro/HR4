@@ -17,7 +17,6 @@ public class DatabaseConnection {
     }
 
     public static Connection connectToDatabase() {
-        // Replace with your PostgreSQL database details
         String url = "jdbc:postgresql://localhost:5432/users";
         String user = "postgres";
         String password = "Rufus@1122";
@@ -32,6 +31,19 @@ public class DatabaseConnection {
             System.out.println("❌ Error connecting to database!");
             e.printStackTrace();
         }
-        return conn; // Return the connection
+        return conn;
+    }
+
+    // Closing the connection after operations
+    public static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("✅ Connection closed successfully!");
+            } catch (SQLException e) {
+                System.out.println("❌ Error closing connection!");
+                e.printStackTrace();
+            }
+        }
     }
 }

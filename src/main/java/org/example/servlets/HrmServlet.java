@@ -1,25 +1,23 @@
 package org.example.servlets;
 
 
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.sql.*; // Add SQL imports
+import java.sql.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.example.counters.RequestCounter; // Import the RequestCounter
+import jakarta.servlet.http.*;
 
-import java.util.List;
+import org.example.counters.RequestCounter;
+import org.example.model.Employee;
+
 import java.util.logging.Logger;
-import java.util.ArrayList;
 
-@WebServlet("/admin")
-public class AdminServlet extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(AdminServlet.class.getName());
+@WebServlet("/hrm")
+public class HrmServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(HrmServlet.class.getName());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -41,7 +39,7 @@ public class AdminServlet extends HttpServlet {
                 String username = (String) session.getAttribute("user");
 
                 // Debugging: Log the username
-                logger.info("Fetching hrm details for user: " + username);
+                logger.info("Fetching admin details for user: " + username);
 
                 // Fetch the admin's details from the database
                 String url = "jdbc:postgresql://localhost:5432/users";
@@ -54,7 +52,7 @@ public class AdminServlet extends HttpServlet {
                 byte[] pictureBytes = null;
 
                 // Query to get admin details
-                String sql = "SELECT first_name, last_name, profile_image FROM users WHERE username = ?"; // Changed picture to profile_image
+                String sql = "SELECT first_name, last_name, profile_image FROM users WHERE username = ?";
                 try (Connection conn = DriverManager.getConnection(url, user, pass);
                      PreparedStatement stmt = conn.prepareStatement(sql)) {
                     stmt.setString(1, username);
@@ -62,7 +60,7 @@ public class AdminServlet extends HttpServlet {
                     if (rs.next()) {
                         firstName = rs.getString("first_name");
                         lastName = rs.getString("last_name");
-                        pictureBytes = rs.getBytes("profile_image"); // Retrieve the profile image as a byte array
+                        pictureBytes = rs.getBytes("profile_image");
                     }
                 }
 
@@ -71,15 +69,12 @@ public class AdminServlet extends HttpServlet {
                 request.setAttribute("lastName", lastName);
                 request.setAttribute("pictureBytes", pictureBytes);
 
-
-
-
                 // Forward to the JSP page
                 request.getRequestDispatcher("/pages/hrm.jsp").forward(request, response);
             } else {
-                // Debugging: Log redirection to landing page
+                // Redirect to landing page if not admin or session is invalid
                 logger.info("Redirecting to landing page. User is not admin or session is invalid.");
-                response.sendRedirect("/pages/index.jsp"); // Redirect to landing page if not admin
+                response.sendRedirect(request.getContextPath() + "/pages/index.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging
@@ -88,4 +83,5 @@ public class AdminServlet extends HttpServlet {
             out.println("<h2>Error: An unexpected error occurred. Please try again later.</h2>");
         }
     }
+
 }

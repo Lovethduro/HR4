@@ -76,9 +76,12 @@ public class LoginServlet extends HttpServlet {
                 }
 
                 // Redirect based on role
-                if ("admin".equals(role)) {
+                if ("admin".equalsIgnoreCase(role)) {
                     System.out.println("Redirecting to admin dashboard.");
                     response.sendRedirect(request.getContextPath() + "/admin"); // Redirect to admin dashboard
+                } else if ("HRM".equalsIgnoreCase(role)) { // Check if HRM logs in
+                    System.out.println("Redirecting to HRM dashboard.");
+                    response.sendRedirect(request.getContextPath() + "/hrm"); // Redirect to HRM dashboard
                 } else {
                     System.out.println("Redirecting to user dashboard.");
                     response.sendRedirect(request.getContextPath() + "/pages/dashboard.jsp"); // Redirect to user dashboard
