@@ -82,7 +82,7 @@
 
         <button type="submit" class="btn">Signup</button>
         <div class="register-link">
-            <p>Already have an account? <a href="index2.jsp">Login</a></p>
+            <p>Already have an account? <a href="login">Login</a></p>
         </div>
     </form>
 </div>

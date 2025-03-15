@@ -64,7 +64,7 @@ public class EmployeeFormServlet extends HttpServlet {
                 // Debugging line: After executing the query
                 if (rowsAffected > 0) {
                     System.out.println("Employee data inserted successfully!");
-                    response.sendRedirect("/pages/employeeList.jsp"); // Redirect to the employee list or success page
+                    response.sendRedirect("displayEmployee"); // Redirect to the employee list or success page
                 } else {
                     // Handle failure to insert
                     System.out.println("Failed to create employee.");

@@ -1,16 +1,12 @@
 package org.example.servlets;
 
-import jakarta.servlet.http.Part;
-import org.example.model.User;
-
-
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.model.User;
 
-import java.io.File;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import java.sql.Connection;
@@ -25,13 +21,12 @@ import org.example.servlets.DatabaseConnection;
         maxFileSize = 1024 * 1024 * 10,      // 10MB
         maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class AddUserServlet extends HttpServlet {
-    private static final String UPLOAD_DIR = "uploads"; // Directory to store uploaded files
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Load the PostgreSQL driver
         DatabaseConnection.loadDriver();
-        
+
         // Retrieve form data
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -43,28 +38,6 @@ public class AddUserServlet extends HttpServlet {
         // Convert dateOfBirth to LocalDate
         LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr);
 
-        // Handle profile image upload
-        Part profileImagePart = request.getPart("profileImage");
-        String profileImagePath = null;
-
-        if (profileImagePart != null && profileImagePart.getSize() > 0) {
-            // Get the application's real path and create the upload directory if it doesn't exist
-            String applicationPath = request.getServletContext().getRealPath("");
-            String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
-            File uploadDir = new File(uploadFilePath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
-
-            // Save the file
-            String fileName = new File(profileImagePart.getSubmittedFileName()).getName();
-            profileImagePath = uploadFilePath + File.separator + fileName;
-            profileImagePart.write(profileImagePath);
-
-            // Store the relative path in the database
-            profileImagePath = UPLOAD_DIR + File.separator + fileName;
-        }
-
         // Create a User object
         User user = new User();
         user.setFirstName(firstName);
@@ -73,22 +46,28 @@ public class AddUserServlet extends HttpServlet {
         user.setUsername(username);
         user.setPassword(password);
         user.setDateOfBirth(dateOfBirth);
-        user.setProfileImage(profileImagePath);
+        user.setRole("user");
 
         // Save the user to the database
         boolean isSuccess = saveUserToDatabase(user);
 
         // Redirect based on success or failure
         if (isSuccess) {
-            response.sendRedirect("userCreatedSuccess.jsp"); // Redirect to success page
+            response.sendRedirect(request.getContextPath() + "/admin"); // Redirect to success page
         } else {
             response.sendRedirect("userCreationFailed.jsp"); // Redirect to failure page
         }
     }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Redirect to the user creation form (user.jsp)
+        response.sendRedirect(request.getContextPath() + "/pages/user.jsp");
+    }
+
     private boolean saveUserToDatabase(User user) {
-        String sql = "INSERT INTO users (first_name, last_name, email, username, password, date_of_birth, profile_image) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (first_name, last_name, email, username, password, date_of_birth, role) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
         Connection conn = null;
         try {
@@ -103,7 +82,8 @@ public class AddUserServlet extends HttpServlet {
             ps.setString(4, user.getUsername());
             ps.setString(5, user.getPassword());
             ps.setObject(6, user.getDateOfBirth());
-            ps.setString(7, user.getProfileImage());
+            ps.setString(7, user.getRole());
+
 
             // Execute the query
             int rowsInserted = ps.executeUpdate();
@@ -117,5 +97,4 @@ public class AddUserServlet extends HttpServlet {
             DatabaseConnection.closeConnection(conn);
         }
     }
-
 }

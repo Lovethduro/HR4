@@ -190,16 +190,17 @@
     </div>
     <div id="employees-section" class="content-section hidden">
                 <h1>employees Section</h1>
-                <form method="post" action="${pageContext.request.contextPath}/searchEmployees">
-                               <input type="text" name="searchQuery" placeholder="Search Employees..." required>
-                               <button type="submit">Search</button>
-                           </form>
+               <button onclick="window.location.href='${pageContext.request.contextPath}/displayEmployeee'" class="menu-items">Add User</button>
 
             </div>
             <div id="user-section" class="content-section hidden">
-              <button onclick="window.location.href='${pageContext.request.contextPath}/createUser'" class="menu-items">Add Employee</button>
-               <h2>user section</h2>
+                <h2>User Section</h2>
+                <button onclick="window.location.href='${pageContext.request.contextPath}/createUser'" class="menu-items">Add User</button>
+                <button onclick="window.location.href='${pageContext.request.contextPath}/displayUser'" class="menu-items">Display Users</button>
+
+
             </div>
+
             <div id="reports-section" class="content-section hidden">
                 <h1>Reports Section</h1>
                 <p>View application reports here.</p>

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page isELIgnored="false" %> <!-- Ensure EL expressions are evaluated -->
 <html>
 <head>
     <title>Create User</title>
@@ -104,7 +105,7 @@
     <h2>Create New User</h2>
 
     <!-- User Creation Form -->
-    <form action="createUser" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form action="${pageContext.request.contextPath}/createUser" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
         <!-- First Name -->
         <div class="form-group">
             <label for="firstName">First Name:</label>
@@ -149,11 +150,7 @@
             <div id="dobError" class="error"></div>
         </div>
 
-        <!-- Profile Image (Optional) -->
-        <div class="form-group">
-            <label for="profileImage">Profile Image:</label>
-            <input type="file" name="profileImage" id="profileImage" accept="image/*">
-        </div>
+
 
         <!-- Button Container -->
         <div class="button-container">
@@ -161,12 +158,12 @@
             <button type="submit">Create User</button>
 
             <!-- Upload Button -->
-            <button type="button" onclick="redirectToUploadServlet()">Upload File</button>
+
         </div>
     </form>
 
     <!-- Back to Dashboard -->
-    <a href="adminDashboard">Back to Dashboard</a>
+    <a href="${pageContext.request.contextPath}/adminDashboard">Back to Dashboard</a>
 
     <script>
         function validateForm() {
@@ -196,7 +193,7 @@
 
         // Function to redirect to the upload servlet
         function redirectToUploadServlet() {
-            window.location.href = "uploadServlet"; // Replace with your upload servlet URL
+            window.location.href = "${pageContext.request.contextPath}/uploadServlet";
         }
     </script>
 </body>

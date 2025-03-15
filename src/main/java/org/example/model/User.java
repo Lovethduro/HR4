@@ -10,7 +10,8 @@ public class User {
     private String username;
     private String password;
     private LocalDate dateOfBirth;
-    private String profileImage;
+    private String role = "user";
+
 
     // Getters and Setters
     public int getId() {
@@ -69,11 +70,13 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getProfileImage() {
-        return profileImage;
+    public String getRole() {
+        return role;
     }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
+    public void setRole(String email) {
+        this.role = role;
     }
+
+
 }
