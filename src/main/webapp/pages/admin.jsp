@@ -2,14 +2,13 @@
 <%@ page import="java.util.Base64" %>
 <%@ page isELIgnored="false" %>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style4.css"> <!-- Link to CSS file -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style4.css">
     <style>
         /* General styles */
         body {
@@ -18,14 +17,14 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensure the footer stays at the bottom */
+            min-height: 100vh;
         }
 
         /* Header styles */
         .header {
             display: flex;
-            justify-content: space-between; /* Space between left and right sections */
-            align-items: center; /* Vertically center items */
+            justify-content: space-between;
+            align-items: center;
             padding: 10px 20px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #ddd;
@@ -51,15 +50,15 @@
         .admin-picture {
             width: 50px;
             height: 50px;
-            border-radius: 50%; /* Circular frame */
-            overflow: hidden; /* Ensures the image stays within the circular frame */
+            border-radius: 50%;
+            overflow: hidden;
             margin-right: 10px;
         }
 
         .admin-picture img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures the image covers the circular frame */
+            object-fit: cover;
         }
 
         #admin-name {
@@ -74,7 +73,7 @@
         }
 
         .logout-button button {
-            background-color: #dc3545; /* Red color for logout button */
+            background-color: #dc3545;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -83,40 +82,40 @@
         }
 
         .logout-button button:hover {
-            background-color: #c82333; /* Darker red on hover */
+            background-color: #c82333;
         }
 
         /* Menu styles */
-         .menu {
-                    margin-top: 10px;
-                    display: flex;
-                    justify-content: space-around;
-                    background-color: brown;
-                    padding: 10px 0;
-                    color: white;
-                }
+        .menu {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+            background-color: brown;
+            padding: 10px 0;
+            color: white;
+        }
 
-                .menu-item {
-                    text-decoration: none;
-                    color: white;
-                    font-weight: bold;
-                    padding: 10px 20px;
-                    cursor: pointer; /* Change to pointer for button effect */
-                }
+        .menu-item {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
 
-                .menu-item:hover {
-                    background-color: black;
-                }
+        .menu-item:hover {
+            background-color: black;
+        }
 
         /* Content styles */
         .content {
             padding: 20px;
-            flex: 1; /* Ensures the content takes up remaining space */
+            flex: 1;
         }
 
-         .hidden {
-                    display: none; /* Ensures hidden sections are not displayed */
-                }
+        .hidden {
+            display: none;
+        }
 
         .content h1 {
             margin-top: 0;
@@ -129,29 +128,39 @@
             background-color: #f8f9fa;
             border-top: 1px solid #ddd;
         }
+
+        /* Button styles */
+        .menu-items {
+            background-color: brown;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .menu-items:hover {
+            background-color: black;
+        }
     </style>
-     <script>
-            // Show the specified section and hide all others
-            function showSection(sectionId) {
-                // Hide all sections
-                document.querySelectorAll('.content-section').forEach(section => {
-                    section.classList.add('hidden');
-                });
-                // Show the selected section
-                document.getElementById(sectionId).classList.remove('hidden');
-            }
-        </script>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+    </script>
 </head>
 <body>
-
     <div class="header">
-        <!-- Session and request info (top left) -->
         <div class="session-info" style="flex:1;">
             <p>Active users connected: <%= org.example.counters.SessionCounter.getActiveSessions() %></p>
             <p>Total requests: <%= org.example.counters.RequestCounter.getRequestCount() %></p>
         </div>
-
-        <!-- Admin info and logout button (top right) -->
         <div class="admin-info">
             <div class="admin-picture">
                 <%
@@ -175,44 +184,34 @@
         </div>
     </div>
 
-    <!-- Menu -->
     <div class="menu">
-            <span class="menu-item" onclick="showSection('home-section')">Home</span>
-            <span class="menu-item" onclick="showSection('employees-section')">Employee</span>
-            <span class="menu-item" onclick="showSection('user-section')">Users</span>
-            <span class="menu-item" onclick="showSection('reports-section')">Reports</span>
-        </div>
+        <span class="menu-item" onclick="showSection('home-section')">Home</span>
+        <span class="menu-item" onclick="showSection('employees-section')">Employee</span>
+        <span class="menu-item" onclick="showSection('user-section')">Users</span>
+        <span class="menu-item" onclick="showSection('reports-section')">Reports</span>
+    </div>
 
     <div class="content">
-     <div id="home-section" class="content-section">
-        <h1>Welcome <%= request.getAttribute("firstName") %>!</h1>
-        <!-- Add more content here if needed -->
-    </div>
-    <div id="employees-section" class="content-section hidden">
-                <h1>employees Section</h1>
-               <button onclick="window.location.href='${pageContext.request.contextPath}/displayEmployeee'" class="menu-items">Add User</button>
-
-            </div>
-            <div id="user-section" class="content-section hidden">
-                <h2>User Section</h2>
-                <button onclick="window.location.href='${pageContext.request.contextPath}/createUser'" class="menu-items">Add User</button>
-                <button onclick="window.location.href='${pageContext.request.contextPath}/displayUser'" class="menu-items">Display Users</button>
-
-
-            </div>
-
-            <div id="reports-section" class="content-section hidden">
-                <h1>Reports Section</h1>
-                <p>View application reports here.</p>
-            </div>
+        <div id="home-section" class="content-section">
+            <h1>Welcome <%= request.getAttribute("firstName") %>!</h1>
         </div>
+        <div id="employees-section" class="content-section hidden">
+            <h1>Employees Section</h1>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/displayEmployeee'" class="menu-items">Add Employee</button>
+        </div>
+        <div id="user-section" class="content-section hidden">
+            <h2>User Section</h2>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/createUser'" class="menu-items">Add User</button>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/displayUser'" class="menu-items">Display Users</button>
+        </div>
+        <div id="reports-section" class="content-section hidden">
+            <h1>Reports Section</h1>
+            <p>View application reports here.</p>
+        </div>
+    </div>
 
-
-
-    <!-- Footer -->
     <div class="footer">
         <p>&copy; 2025 Your Company. All rights reserved.</p>
     </div>
-
 </body>
 </html>

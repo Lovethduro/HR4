@@ -11,6 +11,7 @@ public class User {
     private String password;
     private LocalDate dateOfBirth;
     private String role = "user";
+    private String phone;
 
 
     // Getters and Setters
@@ -74,9 +75,18 @@ public class User {
         return role;
     }
 
-    public void setRole(String email) {
+    public void setRole(String role) {
         this.role = role;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
 }
+
+

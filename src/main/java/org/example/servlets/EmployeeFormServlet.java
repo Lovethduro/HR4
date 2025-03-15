@@ -8,21 +8,18 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.example.servlets.DatabaseConnection;
 
 @WebServlet("/createEmployee")
 public class EmployeeFormServlet extends HttpServlet {
 
-    // Handle GET request (show the employee creation form)
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Forward the request to the employee form JSP
         request.getRequestDispatcher("/pages/employeeForm.jsp").forward(request, response);
     }
 
-    // Handle POST request (form submission)
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Retrieve form data (e.g., employee first name, last name, phone, etc.)
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String phone = request.getParameter("phone");
@@ -34,54 +31,55 @@ public class EmployeeFormServlet extends HttpServlet {
         String role = request.getParameter("role");
         String qualification = request.getParameter("qualification");
 
-        // SQL query to insert employee data
-        String sql = "INSERT INTO employee (first_name, last_name, phone, postal_address, email, department, position, role, qualification, created_by) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        // Attempt to establish the connection using DatabaseConnection
         Connection conn = DatabaseConnection.connectToDatabase();
-
         if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                // Set the values in the prepared statement
-                stmt.setString(1, firstName);
-                stmt.setString(2, lastName);
-                stmt.setString(3, phone);
-                stmt.setString(4, address);
-                stmt.setString(5, qualification);
-                stmt.setString(6, email);
-                stmt.setString(7, department);
-                stmt.setString(8, position);
-                stmt.setString(9, role);
-                stmt.setString(10, createdBy);
+            try {
+                if (isEmailOrPhoneExists(conn, email, phone)) {
+                    response.getWriter().println("Error: Email or phone number already exists.");
+                    return;
+                }
 
-                // Debugging line: Before executing the query
-                System.out.println("Prepared statement is ready to execute, attempting to insert employee data...");
+                String sql = "INSERT INTO employee (first_name, last_name, phone, postal_address, email, department, position, role, qualification, created_by) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                // Execute the query
-                int rowsAffected = stmt.executeUpdate();
+                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                    stmt.setString(1, firstName);
+                    stmt.setString(2, lastName);
+                    stmt.setString(3, phone);
+                    stmt.setString(4, address);
+                    stmt.setString(5, email);
+                    stmt.setString(6, department);
+                    stmt.setString(7, position);
+                    stmt.setString(8, role);
+                    stmt.setString(9, qualification);
+                    stmt.setString(10, createdBy);
 
-                // Debugging line: After executing the query
-                if (rowsAffected > 0) {
-                    System.out.println("Employee data inserted successfully!");
-                    response.sendRedirect("displayEmployee"); // Redirect to the employee list or success page
-                } else {
-                    // Handle failure to insert
-                    System.out.println("Failed to create employee.");
-                    response.getWriter().println("Failed to create employee.");
+                    int rowsAffected = stmt.executeUpdate();
+                    if (rowsAffected > 0) {
+                        response.sendRedirect("displayEmployee");
+                    } else {
+                        response.getWriter().println("Failed to create employee.");
+                    }
                 }
             } catch (SQLException e) {
-                // Handle any SQL exceptions (e.g., database operation issues)
                 e.printStackTrace();
                 response.getWriter().println("Error: " + e.getMessage());
             } finally {
-                // Close the connection after the operation
                 DatabaseConnection.closeConnection(conn);
             }
         } else {
-            // If the connection is null, handle the error
-            System.out.println("Failed to connect to the database.");
             response.getWriter().println("Error: Unable to connect to the database.");
+        }
+    }
+
+    private boolean isEmailOrPhoneExists(Connection conn, String email, String phone) throws SQLException {
+        String checkSql = "SELECT 1 FROM employee WHERE email = ? OR phone = ?";
+        try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+            checkStmt.setString(1, email);
+            checkStmt.setString(2, phone);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                return rs.next();
+            }
         }
     }
 }

@@ -20,14 +20,12 @@ public class MyFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        // Pre-processing before the request is processed
-        System.out.println("Filter is applied!");
+
 
         // Continue the request-response chain
         chain.doFilter(request, response);
 
-        // Post-processing after the response is generated
-        System.out.println("Filter completed!");
+
     }
 
     @Override

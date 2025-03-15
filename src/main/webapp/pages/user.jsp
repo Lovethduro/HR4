@@ -12,6 +12,7 @@
             padding: 20px;
         }
 
+
         h2 {
             color: #4a2c2a; /* Dark brown heading color */
             text-align: center;
@@ -44,7 +45,8 @@
         input[type="email"],
         input[type="password"],
         input[type="date"],
-        input[type="file"] {
+        input[type="file"],
+        input[type="tel"] {
             width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
@@ -150,6 +152,12 @@
             <div id="dobError" class="error"></div>
         </div>
 
+        <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" name="phone" id="phone" required>
+                </div>
+
 
 
         <!-- Button Container -->
@@ -163,7 +171,7 @@
     </form>
 
     <!-- Back to Dashboard -->
-    <a href="${pageContext.request.contextPath}/adminDashboard">Back to Dashboard</a>
+    <a href="${pageContext.request.contextPath}/admin">Back to Dashboard</a>
 
     <script>
         function validateForm() {

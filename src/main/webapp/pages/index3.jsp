@@ -37,7 +37,7 @@
 <div class="wrapper">
     <button type="button" class="back-button" onclick="goBack();">
         <img src="images/close.png" alt="Back"></button>
-    <form action="Register" method="post" id="signupForm" onsubmit="console.log('Submitting form...')">
+    <form action="Register" method="post" id="signupForm" onsubmit="return validateForm();">
         <h1>Signup</h1>
         <div class="input-box">
             <input type="text" name="firstname" placeholder="First Name" required>
@@ -68,16 +68,30 @@
             <i class='bx bxs-lock'></i>
         </div>
 
+        <!-- Phone Number Field (Moved to the bottom) -->
+        <div class="input-box">
+            <input type="tel" name="phone" placeholder="Phone Number" required>
+            <i class='bx bxs-phone'></i>
+        </div>
+
         <!-- Error message display -->
         <div class="error-message">
             <p id="error-message" style="color: red;">
                 <%
-                    String error = request.getParameter("error");
+                    String error =  (String) request.getAttribute("error");
                     if (error != null) {
                         out.println(error); // Display error message if available
                     }
                 %>
             </p>
+            <p id="success-message" style="color: green;">
+                    <%
+                        String success = (String) request.getAttribute("success");
+                        if (success != null) {
+                            out.println(success); // Display success message if available
+                        }
+                    %>
+                </p>
         </div>
 
         <button type="submit" class="btn">Signup</button>
