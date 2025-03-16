@@ -248,7 +248,7 @@
                </p>
            <!-- Button to navigate to createEmployee page -->
            <button onclick="window.location.href='${pageContext.request.contextPath}/createEmployee'" class="menu-items">Add Employee</button>
-           <button onclick="window.location.href='${pageContext.request.contextPath}/displayEmployee'" class="menu-items">display Employee</button>
+           <button onclick="window.location.href='${pageContext.request.contextPath}/displayEmployee'" class="menu-items">Display Employee</button>
        </div>
 
 
@@ -313,7 +313,7 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p>&copy; 2025 Your Company. All rights reserved.</p>
+        <p>&copy; 2025 Green Horizons Enterprises. All rights reserved.</p>
     </div>
 </body>
 </html>

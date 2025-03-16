@@ -194,24 +194,128 @@
     <div class="content">
         <div id="home-section" class="content-section">
             <h1>Welcome <%= request.getAttribute("firstName") %>!</h1>
+             <h1>Welcome to Green Horizons Enterprises</h1>
+
+                <h2>About Us</h2>
+                <p>
+                    Green Horizons Enterprises is a forward-thinking company committed to sustainable solutions and
+                    innovative business practices. As a leader in the HR industry, we strive to create a work environment
+                    that fosters growth, efficiency, and employee well-being.
+                </p>
+
+                <h2>Our Mission</h2>
+                <p>
+                    Our mission is to empower businesses with effective workforce management solutions while prioritizing
+                    sustainability and ethical business practices. We believe that a strong workforce is the foundation of
+                    a successful company, and we are dedicated to supporting our employees in achieving their full potential.
+                </p>
+
+                <h2>Our Vision</h2>
+                <p>
+                    To be a global leader in HR solutions, known for innovation, integrity, and excellence in employee management.
+                </p>
+
+                <h2>Why Choose Us?</h2>
+                <ul>
+                    <li><strong>People-Centric Approach:</strong> We put our employees first, ensuring a productive and positive work environment.</li>
+                    <li><strong>Innovation-Driven:</strong> We leverage technology to streamline HR processes and improve operational efficiency.</li>
+                    <li><strong>Sustainability:</strong> Our eco-friendly initiatives contribute to a greener future for businesses and communities.</li>
+                </ul>
+
+                <h2>What We Offer</h2>
+                <p>At Green Horizons Enterprises, we provide:</p>
+                <ul>
+                    <li>✔ A dynamic and inclusive work environment.</li>
+                    <li>✔ Cutting-edge HR solutions for employee management.</li>
+                    <li>✔ Continuous learning and career development opportunities.</li>
+                </ul>
         </div>
         <div id="employees-section" class="content-section hidden">
-            <h1>Employees Section</h1>
-            <button onclick="window.location.href='${pageContext.request.contextPath}/displayEmployeee'" class="menu-items">Add Employee</button>
+             <h2>Our Workforce</h2>
+                <p>
+                    At Green Horizons Enterprises, our employees are the backbone of our success. We prioritize a collaborative
+                    and growth-driven work culture that ensures our team members excel in their respective roles.
+                </p>
+
+                <h2>Employee Benefits</h2>
+                <ul>
+                    <li>✔ Competitive salaries and performance-based bonuses.</li>
+                    <li>✔ Career development programs and skill enhancement training.</li>
+                    <li>✔ Comprehensive health and wellness benefits.</li>
+                    <li>✔ A diverse and inclusive work environment.</li>
+                </ul>
+
+                <h2>Employee Operations</h2>
+                <p>
+                    As an admin, you can manage employees efficiently by ensuring compliance with company policies.
+                </p>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/displayEmployeee'" class="menu-items">Display Employee</button>
         </div>
         <div id="user-section" class="content-section hidden">
-            <h2>User Section</h2>
+            <h2>Managing System Users</h2>
+                <p>
+                    Our HR system ensures seamless user management by providing secure access and role-based authentication
+                    for employees, HR managers, and administrators. Each user is assigned a role to maintain structured
+                    access control within the system.
+                </p>
+
+                <h2>User Roles</h2>
+                <ul>
+                    <li>✔ <strong>Admin:</strong> Full control over employee records, user management, and system reports.</li>
+                    <li>✔ <strong>HR Manager:</strong> Manages employee details, roles, and workforce-related operations.</li>
+                    <li>✔ <strong>Employee:</strong> Limited access to personal information and work-related tools.</li>
+                </ul>
+
+                <h2>Security & Authentication</h2>
+                <p>
+                    To maintain system integrity, all users must authenticate using their credentials. Password protection
+                    and role-based access ensure data security and prevent unauthorized modifications.
+                </p>
+
+                <h2>User Operations</h2>
+                <p>
+                    As an admin, you have the authority to create new users, modify their roles, and deactivate accounts
+                    when necessary.
+                </p>
+
             <button onclick="window.location.href='${pageContext.request.contextPath}/createUser'" class="menu-items">Add User</button>
             <button onclick="window.location.href='${pageContext.request.contextPath}/displayUser'" class="menu-items">Display Users</button>
         </div>
         <div id="reports-section" class="content-section hidden">
-            <h1>Reports Section</h1>
-            <p>View application reports here.</p>
+             <h1>Reports & Analytics</h1>
+
+                <h2>Overview</h2>
+                <p>
+                    The Reports section provides valuable insights into employee data, system usage, and HR operations.
+                    As an admin, you can generate and analyze reports to make informed decisions and improve workforce management.
+                </p>
+
+                <h2>Available Reports</h2>
+                <ul>
+                    <li>📊 <strong>Employee Reports:</strong> View detailed records of employees, including roles, qualifications, and employment history.</li>
+                    <li>📈 <strong>System Usage Reports:</strong> Monitor user activity, login trends, and overall system engagement.</li>
+                    <li>📅 <strong>Attendance & Leave Reports:</strong> Track employee attendance, leaves, and work schedules.</li>
+                    <li>💼 <strong>HR Performance Reports:</strong> Evaluate HR efficiency through task completion and operational benchmarks.</li>
+                </ul>
+
+                <h2>Data Security & Accuracy</h2>
+                <p>
+                    All reports are generated based on real-time data, ensuring accuracy and reliability. Access to reports is
+                    restricted based on user roles to maintain confidentiality and compliance with company policies.
+                </p>
+
+                <h2>Actions</h2>
+                <p>
+                    Use the reports feature to export data, visualize trends, and support strategic decision-making within the HR system.
+                </p>
+
+                <button onclick="window.location.href='${pageContext.request.contextPath}/generateReport'" class="menu-items">Generate Report</button>
+                <button onclick="window.location.href='${pageContext.request.contextPath}/viewReports'" class="menu-items">View Reports</button>
         </div>
     </div>
 
     <div class="footer">
-        <p>&copy; 2025 Your Company. All rights reserved.</p>
+        <p>&copy; 2025 Green Horizons Enterprises. All rights reserved.</p>
     </div>
 </body>
 </html>

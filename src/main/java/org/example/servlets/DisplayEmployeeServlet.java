@@ -6,12 +6,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.model.Employee;
-import org.example.servlets.DatabaseConnection; // Assuming you have a Database class to handle connections
+import org.example.model.Employee; // Import the Employee class
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/displayEmployee") // Define the URL pattern for the servlet
 public class DisplayEmployeeServlet extends HttpServlet {
@@ -49,15 +52,34 @@ public class DisplayEmployeeServlet extends HttpServlet {
                     String role = rs.getString("role");
                     String qualification = rs.getString("qualification");
 
-                    employeeList.add(new Employee(empId, firstName, lastName, address, createdBy, department, position, role, qualification));
+                    // Create an Employee object and add it to the list
+                    Employee employee = new Employee(empId, firstName, lastName, address, createdBy, department, position, role, qualification);
+                    employeeList.add(employee);
                 }
             }
 
-            // Set the employee list as a request attribute to pass to JSP
-            request.setAttribute("employees", employeeList);
+            // Check if the employee list is empty
+            if (employeeList.isEmpty()) {
+                // Set an error message if no employees are found
+                request.setAttribute("errorMessage", "No employees found matching the search criteria.");
+            } else {
+                // Set the employee list as a request attribute to pass to JSP
+                request.setAttribute("employees", employeeList);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            // Set an error message for database errors
+            request.setAttribute("errorMessage", "An error occurred while fetching employee data.");
+        } finally {
+            // Close the database connection
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         // Forward the request to employeeList.jsp

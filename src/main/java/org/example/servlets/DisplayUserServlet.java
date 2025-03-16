@@ -6,8 +6,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.model.User; // Import the User class
-import org.example.servlets.DatabaseConnection; // Assuming you have a Database class to handle connections
+import org.example.model.User;
+
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -67,14 +68,31 @@ public class DisplayUserServlet extends HttpServlet {
                 }
             }
 
-            // Set the user list as a request attribute to pass to JSP
-            request.setAttribute("users", userList);
+            // Check if the user list is empty
+            if (userList.isEmpty()) {
+                // Set an error message if no users are found
+                request.setAttribute("errorMessage", "No users found matching the search criteria.");
+            } else {
+                // Set the user list as a request attribute to pass to JSP
+                request.setAttribute("users", userList);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            // Set an error message for database errors
+            request.setAttribute("errorMessage", "An error occurred while fetching user data.");
+        } finally {
+            // Close the database connection
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        // Forward the request to user.jsp
+        // Forward the request to display.jsp
         RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/display.jsp");
         dispatcher.forward(request, response);
     }
